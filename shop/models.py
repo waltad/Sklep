@@ -1,4 +1,3 @@
-from django.db import models
 from django.db.models import (Model,
                               CharField, DateField, DateTimeField, IntegerField, DecimalField, TextField,
                               ForeignKey, DO_NOTHING, )
@@ -8,8 +7,8 @@ from django.db.models import (Model,
 class Product(Model):
     category = CharField(max_length=128)
     photo = CharField(max_length=128)
-    description = TextField
-    amount = IntegerField
+    description = TextField(null=True)
+    amount = IntegerField(default=0)
     price = DecimalField(max_digits=10, decimal_places=2)
 
 
@@ -33,17 +32,17 @@ class Delivery(Model):
 
 class Basket(Model):
     product = ForeignKey(Product, on_delete=DO_NOTHING)
-    amount = IntegerField
+    amount = IntegerField(default=0)
     client = ForeignKey(Client, on_delete=DO_NOTHING)
 
 
 class Order(Model):
     delivery = ForeignKey(Delivery, on_delete=DO_NOTHING)
     client = ForeignKey(Client, on_delete=DO_NOTHING)
-    date_order = DateTimeField(auto_created=True)
+    date_order = DateTimeField(auto_now_add=True)
 
 
 class ProductInOrder(Model):
     order = ForeignKey(Order, on_delete=DO_NOTHING)
     product = ForeignKey(Product, on_delete=DO_NOTHING)
-    amount = IntegerField
+    amount = IntegerField(default=0)
