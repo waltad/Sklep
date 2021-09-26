@@ -9,7 +9,7 @@ class Product(Model):
     photo = CharField(max_length=128)
     description = TextField
     amount = IntegerField
-    price = IntegerField
+    price = models.DecimalField(max_digits=10,decimal_places=2)
 
 
 class Client(Model):
@@ -27,7 +27,7 @@ class Client(Model):
 
 class Delivery(Model):
     delivery_company = CharField(max_length=128)
-    delivery_price = IntegerField
+    delivery_price = models.DecimalField(max_digits=5,decimal_places=2)
 
 
 class Basket(Model):
