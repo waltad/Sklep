@@ -4,12 +4,13 @@ from django.db.models import (Model,
                               ForeignKey, DO_NOTHING, )
 # Create your models here.
 
+
 class Product(Model):
     category = CharField(max_length=128)
     photo = CharField(max_length=128)
     description = TextField
     amount = IntegerField
-    price = DecimalField(max_digits=10,decimal_places=2)
+    price = DecimalField(max_digits=10, decimal_places=2)
 
 
 class Client(Model):
@@ -27,7 +28,7 @@ class Client(Model):
 
 class Delivery(Model):
     delivery_company = CharField(max_length=128)
-    delivery_price = DecimalField(max_digits=5,decimal_places=2)
+    delivery_price = DecimalField(max_digits=5, decimal_places=2)
 
 
 class Basket(Model):
