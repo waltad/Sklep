@@ -43,15 +43,7 @@ class Order(Model):
     date_order = DateTimeField(auto_created=True)
 
 
-class Product_in_order(Model):
+class ProductInOrder(Model):
     order = ForeignKey(Order, on_delete=DO_NOTHING)
     product = ForeignKey(Product, on_delete=DO_NOTHING)
     amount = IntegerField
-
-
-
-
-
-
-
-

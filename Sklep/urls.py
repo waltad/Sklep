@@ -16,6 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder
+
+admin.site.register(Product)
+admin.site.register(Client)
+admin.site.register(Delivery)
+admin.site.register(Basket)
+admin.site.register(Order)
+admin.site.register(ProductInOrder)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
