@@ -39,6 +39,12 @@
                         <a class="nav-link" href="{%  url 'basket_delete' %}">Usuń koszyk</a>
                         <a class="nav-link" href="{%  url 'basket_edit' %}">Edytuj koszyk</a>
                         <a class="nav-link" href="{%  url 'purchase' %}">Złóż zamówienie</a>
+                    {% if user.is_staff %}
+                        <a class="nav-link" href="{%  url 'product_add' %}">Dodaj produkt</a>
+                        <a class="nav-link" href="{%  url 'product_delete' %}">Usuń produkt</a>
+                        <a class="nav-link" href="{%  url 'product_edit' %}">Edytuj produkt</a>
+                        <a class="nav-link" href="{%  url 'product_classification' %}">Edytuj produkt</a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
