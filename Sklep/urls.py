@@ -16,16 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from shop import views
 from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder
 
-admin.site.register(Product)
-admin.site.register(Client)
-admin.site.register(Delivery)
-admin.site.register(Basket)
-admin.site.register(Order)
-admin.site.register(ProductInOrder)
+from django.contrib.admin.sites import AlreadyRegistered
+try:
+    admin.site.register(Product)
+    admin.site.register(Client)
+    admin.site.register(Delivery)
+    admin.site.register(Basket)
+    admin.site.register(Order)
+    admin.site.register(ProductInOrder)
+except AlreadyRegistered:
+    pass
+
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.ProductView.as_view(), name='products'),
 ]
