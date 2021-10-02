@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from shop import views
@@ -21,7 +22,7 @@ from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder
 
 from django.contrib.admin.sites import AlreadyRegistered
 
-from shop.views import ProductDetailView
+from shop.views import ProductDetailView, SubmittableLoginView, SubmittablePasswordChangeForm
 
 try:
     admin.site.register(Product)
@@ -37,6 +38,9 @@ except AlreadyRegistered:
 
 
 urlpatterns = [
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('login/', SubmittableLoginView.as_view(), name='login'),
+    path('password_change/', SubmittablePasswordChangeForm.as_view(), name='password_change'),
     path('admin/', admin.site.urls),
     path('', views.ProductView.as_view(), name='products'),
     path('products/details/<id>', ProductDetailView.as_view(), name='movie_details'),

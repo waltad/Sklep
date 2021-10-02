@@ -40,8 +40,8 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = ProductForm
     # adres pobrany z UrLs który zostaniemy przekierowanina
     # gdy aktualizacja się powiedzie (index pochodzi z name!)
-    success_url = reverse_lazy('index')
-    # Nazwa necji z której będziemy
+    success_url = reverse_lazy('products')
+    # Nazwa encji z której będziemy
     model = Product
     permission_required = 'shop.product_edit'
     LOGGER.warning('User provided invalid data')
@@ -56,7 +56,7 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
 
 class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'product_delete.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('products')
     # Nazwa necji z której będziemy kasować rekord
     model = Product
     permission_required = 'shop.product_delete'
@@ -76,10 +76,10 @@ class SubmittableLoginView(LoginView):
 
 class SubmittablePasswordChangeForm(PasswordChangeView):
     template_name = 'form.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('products')
 
 
 class SignUpView(CreateView):
     form_class = SignUpForm
     template_name = 'form.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('products')

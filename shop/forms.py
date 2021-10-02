@@ -46,14 +46,8 @@ class ProductForm(ModelForm):
 
 class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
-        fields = ['name', 'surname', 'street', 'home_number', 'flat_number', 'postcode', 'locality', 'country', 'mail', 'phone_number']
+        fields = ['username', 'first_name', 'last_name', 'email']
 
-    name = CharField(
-        label='Podaj imię', widget=Textarea, min_length=3
-    )
-    surname = CharField(
-        label='Podaj nazwisko', widget=Textarea, min_length=3
-    )
     street = CharField(
         label='Podaj ulicę', widget=Textarea, min_length=3
     )
@@ -72,9 +66,6 @@ class SignUpForm(UserCreationForm):
     country = CharField(
         label='Podaj kraj zamieszkania', widget=Textarea, min_length=3
     )
-    mail = CharField(
-        label='Podaj adres e-mail', widget=Textarea, min_length=5
-    )
     phone_number = CharField(
         label='Podaj numer telefonu', widget=Textarea, min_length=3
     )
@@ -83,9 +74,15 @@ class SignUpForm(UserCreationForm):
     def save(self, commit=True):
         self.instance.is_activate = False
         result = super().save(commit)
-        name = self.cleaned_data['name', 'surname', 'street', 'home_number', 'flat_number', 'postcode', 'locality',
-                                 'country', 'mail', 'phone_number']
-        profile = Profile(name=name, user=result)
+        street = self.cleaned_data['street']
+        home_number = self.cleaned_data['home_number']
+        flat_number = self.cleaned_data['flat_number']
+        postcode = self.cleaned_data['postcode']
+        locality = self.cleaned_data['locality']
+        country = self.cleaned_data['country']
+        phone_number = self.cleaned_data['phone_number']
+        profile = Profile(street=street, home_number=home_number, flat_number=flat_number, postcode=postcode,
+                          locality=locality, country=country, phone_number=phone_number, user=result)
         if commit:
             profile.save()
         return result
