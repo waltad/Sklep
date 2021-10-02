@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.db.models import (Model,
                               CharField, DateField, DateTimeField, IntegerField, DecimalField, TextField,
-                              ForeignKey, DO_NOTHING, )
+                              ForeignKey, DO_NOTHING, OneToOneField, CASCADE)
 # Create your models here.
 
 
@@ -46,3 +47,8 @@ class ProductInOrder(Model):
     order = ForeignKey(Order, on_delete=DO_NOTHING)
     product = ForeignKey(Product, on_delete=DO_NOTHING)
     amount = IntegerField(default=0)
+
+
+class Profile(Model):
+    user = OneToOneField(User, on_delete=CASCADE)
+    # biography = TextField()

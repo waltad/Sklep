@@ -20,6 +20,9 @@ from shop import views
 from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder
 
 from django.contrib.admin.sites import AlreadyRegistered
+
+from shop.views import ProductDetailView
+
 try:
     admin.site.register(Product)
     admin.site.register(Client)
@@ -36,4 +39,5 @@ except AlreadyRegistered:
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.ProductView.as_view(), name='products'),
+    path('products/details/<id>', ProductDetailView.as_view(), name='movie_details'),
 ]
