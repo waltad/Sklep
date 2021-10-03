@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Dodaj do koszyka
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+         <div class="form-group">
+            <!-- Produkt -->
+            {{ form.product_name.errors }}
+            <label for="{{ form.product_name.id_for_label }}">Produktu</label>
+            {{ form.product_name }}
+        </div>
+
+        <div class="form-row">
+            <!-- Ilość -->
+            <div class="form-group col-md-4">
+                {{ form.amount.errors }}
+                <label for="{{ form.amount.id_for_label }}">Ilość</label>
+                {{ form.amount }}
+
+            </div>
+            <input type="range" value="Wybierz ilość" class="btn btn-primary">
+            <!-- Klient -->
+            <div class="form-group col-md-4">
+                {{ form.client.errors }}
+                <label for="{{ form.client.id_for_label }}">Klient</label>
+                {{ form.client }}
+            </div>
+        </div>
+    </form>
+{% endblock %}

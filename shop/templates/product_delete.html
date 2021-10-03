@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %} Usuwanie produktu {% endblock %}
+
+{% block content %}
+    {% if user.is_staff %}
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            Are you sure want to delete this product "{{ products.title }}"?
+        </p>
+        <input type="submit" value="Yes" class="btn btn-danger">
+    </form>
+    {% endif %}
+
+{% endblock %}
