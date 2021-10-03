@@ -1,10 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Dodaj produkt
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="form-group">
+            <!-- Nazwa produktu -->
+            {{ form.product_name.errors }}
+            <label for="{{ form.product_name.id_for_label }}">Nazwa produktu</label>
+            {{ form.product_name }}
+        </div>
+
+        <div class="form-row">
+            <!-- Kategoria -->
+            <div class="form-group col-md-4">
+                {{ form.category.errors }}
+                <label for="{{ form.category.id_for_label }}">Kategoria</label>
+                {{ form.category }}
+            </div>
+            <!-- Zdjęcia -->
+            <div class="form-group col-md-4">
+                {{ form.photo.errors }}
+                <label for="{{ form.photo.id_for_label }}">Zdjęcia</label>
+                {{ form.photo }}
+
+            </div>
+            <input type="image" value="Wybierz zdjęcie" class="btn btn-primary">
+        </div>
+            <!-- Opis produktu -->
+        <div class="form-group">
+            {{ form.description.errors }}
+            <label for="{{ form.description.id_for_label }}">Opis</label>
+            {{ form.description }}
+        </div>
+
+        <input type="submit" value="Wyślij" class="btn btn-primary">
+
+            <!-- Ilość -->
+        <div class="form-group col-md-4">
+            {{ form.amount.errors }}
+            <label for="{{ form.amount.id_for_label }}">Ilość</label>
+            {{ form.amount }}
+        </div>
+        <input type="range" value="Wybierz ilość" class="btn btn-primary">
+
+         <!-- Cena -->
+        <div class="form-group col-md-4">
+            {{ form.price.errors }}
+            <label for="{{ form.price.id_for_label }}">Cena</label>
+            {{ form.price }}
+        </div>
+        <input type="number" value="Cena" class="input-group-text">.00">
+
+    </form>
+
+
+
+{% endblock %}
