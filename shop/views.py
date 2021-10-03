@@ -13,7 +13,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from shop.forms import ProductForm, SignUpForm
-from shop.models import Product
+from shop.models import Product, Basket
 
 
 class ProductView(ListView):
@@ -21,7 +21,7 @@ class ProductView(ListView):
     model = Product
 
 
-class MovieCreateView(PermissionRequiredMixin, CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'formAddEditProduct.html'
     form_class = ProductForm
     success_url = reverse_lazy('product_add')
@@ -83,3 +83,40 @@ class SignUpView(CreateView):
     form_class = SignUpForm
     template_name = 'form.html'
     success_url = reverse_lazy('products')
+
+
+class BasketView(ListView):
+    template_name = 'formAddEditBasket.html.html'
+    model = Basket
+
+
+class CreateBasketView(PermissionRequiredMixin, CreateView):
+    template_name = 'formAddEditBasket.html'
+    form_class = Basket
+    success_url = reverse_lazy('basket_add')
+    permission_required = 'shop.basked_add'
+
+
+class BasketUpdateView(PermissionRequiredMixin, UpdateView):
+    template_name = 'formAddEditBasket.html'
+    form_class = Basket
+    success_url = reverse_lazy('basket_edit')
+    model = Basket
+    permission_required = 'shop.basket_edit'
+    LOGGER.warning('User provided invalid data')
+
+    # co dzieje się, gdy formularz nie przejdzie walidacji:
+    def form_invalid(self, form):
+        # odkładamy w logach informacje o operacji
+        LOGGER.warning('User provided invalid data')
+        # zwraca wynik działania pierwotnej funkcji form_invalid
+        return super().form_invalid(form)
+
+
+class BasketDeleteView(PermissionRequiredMixin, DeleteView):
+    template_name = 'basket_delete.html'
+    success_url = reverse_lazy('basket_delete')
+    # Nazwa necji z której będziemy kasować rekord
+    model = Product
+    permission_required = 'shop.basket_delete'
+
