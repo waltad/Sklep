@@ -10,9 +10,9 @@
         <li>
             <a href="{% url 'product_details' product.id %}">{{ product.category }}</a>
                 {{product.price}}) - {{product.amount}}
-            <a href="{% url 'product_add' product.id %}">(Dodaj)</a>
-            <a href="{% url 'product_delete' product.id %}">(Usuń)</a>
-            <a href="{% url 'product_edit' product.id %}">(Edytuj)</a>
+{#            <a href="{% url 'product_add' product.id %}">(Dodaj)</a>#}
+{#            <a href="{% url 'product_delete' product.id %}">(Usuń)</a>#}
+{#            <a href="{% url 'product_edit' product.id %}">(Edytuj)</a>#}
         </li>
 
     {% endfor %}

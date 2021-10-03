@@ -55,7 +55,7 @@ urlpatterns = [
     path('sign-up/', SignUpView.as_view(), name='sign_up'),
     path('admin/', admin.site.urls),
     path('', ProductView.as_view(), name='products'),
-    path('products/details/', ProductDetailView.as_view(), name='product_details'),
+    path('products/details/<id>', ProductDetailView.as_view(), name='product_details'),
     path('products/product_add/', ProductCreateView.as_view(), name='product_add'),
     path('products/product_delete/', ProductDeleteView.as_view(), name='product_delete'),
     path('products/product_edit/', ProductUpdateView.as_view(), name='product_edit'),
