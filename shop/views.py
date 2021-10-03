@@ -24,7 +24,7 @@ class ProductView(ListView):
 class ProductCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'formAddEditProduct.html'
     form_class = ProductForm
-    success_url = reverse_lazy('product_add')
+    success_url = reverse_lazy('products')
     permission_required = 'shop.product_add'
 
     # co dzieje się, gdy formularz nie przejdzie walidacji:
@@ -86,7 +86,7 @@ class SignUpView(CreateView):
 
 
 class BasketView(ListView):
-    template_name = 'formAddEditBasket.html.html'
+    template_name = 'formAddEditBasket.html'
     model = Basket
 
 
