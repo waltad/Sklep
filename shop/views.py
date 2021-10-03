@@ -24,7 +24,7 @@ class ProductView(ListView):
 class ProductCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'formAddEditProduct.html'
     form_class = ProductForm
-    success_url = reverse_lazy('product_add')
+    success_url = reverse_lazy('products')
     permission_required = 'shop.product_add'
 
     # co dzieje się, gdy formularz nie przejdzie walidacji:
@@ -86,15 +86,15 @@ class SignUpView(CreateView):
 
 
 class BasketView(ListView):
-    template_name = 'formAddEditBasket.html.html'
+    template_name = 'formAddEditBasket.html'
     model = Basket
 
 
-class CreateBasketView(PermissionRequiredMixin, CreateView):
+class BasketCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'formAddEditBasket.html'
     form_class = Basket
     success_url = reverse_lazy('basket_add')
-    permission_required = 'shop.basked_add'
+    permission_required = 'shop.basket_add'
 
 
 class BasketUpdateView(PermissionRequiredMixin, UpdateView):
@@ -105,18 +105,35 @@ class BasketUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'shop.basket_edit'
     LOGGER.warning('User provided invalid data')
 
-    # co dzieje się, gdy formularz nie przejdzie walidacji:
     def form_invalid(self, form):
-        # odkładamy w logach informacje o operacji
         LOGGER.warning('User provided invalid data')
-        # zwraca wynik działania pierwotnej funkcji form_invalid
         return super().form_invalid(form)
 
 
 class BasketDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'basket_delete.html'
     success_url = reverse_lazy('basket_delete')
-    # Nazwa necji z której będziemy kasować rekord
-    model = Product
+    model = Basket
     permission_required = 'shop.basket_delete'
 
+
+class BasketDetailView(View):
+    def get(self, request, id):
+        return render(
+            request, 'basket_details.html',
+            context={'basket': Product.objects.get(id=id)}
+        )
+
+
+class PurchaseView(PermissionRequiredMixin, UpdateView):
+    template_name = 'fromAddEditBasket.html'
+    success_url = reverse_lazy('purchase')
+    model = Basket
+    permission_required = 'shop.purchase'
+
+
+class ProductClassificationView(PermissionRequiredMixin, UpdateView):
+    template_name = 'formAddEditProduct.html'
+    success_url = reverse_lazy('product_classification')
+    model = Basket
+    permission_required = 'shop.product_classification'
