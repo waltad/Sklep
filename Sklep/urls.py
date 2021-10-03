@@ -25,7 +25,7 @@ from django.contrib.admin.sites import AlreadyRegistered
 
 from shop.views import ProductDetailView, ProductUpdateView, ProductCreateView, ProductDeleteView, SignUpView, \
     SubmittableLoginView, SubmittablePasswordChangeForm, ProductView, BasketDetailView, BasketCreateView, \
-    BasketDeleteView, BasketUpdateView
+    BasketDeleteView, BasketUpdateView, ProductClassificationView
 
 try:
     admin.site.register(Product)
@@ -56,12 +56,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ProductView.as_view(), name='products'),
     path('products/details/<id>', ProductDetailView.as_view(), name='product_details'),
-    path('products/product_add/<pk>', ProductCreateView.as_view(), name='product_add'),
-    path('products/product_delete/<pk>', ProductDeleteView.as_view(), name='product_delete'),
-    path('products/product_edit/<pk>', ProductUpdateView.as_view(), name='product_edit'),
-    path('basket/details/<id>', BasketDetailView.as_view(), name='basket_details'),
-    path('basket/basket_add/<pk>', BasketCreateView.as_view(), name='basket_add'),
-    path('basket/basket_delete/<pk>', BasketDeleteView.as_view(), name='basket_delete'),
-    path('basket/basket_edit/<pk>', BasketUpdateView.as_view(), name='basket_edit'),
-
+    path('products/product_add', ProductCreateView.as_view(), name='product_add'),
+    path('products/product_delete', ProductDeleteView.as_view(), name='product_delete'),
+    path('products/product_edit', ProductUpdateView.as_view(), name='product_edit'),
+    path('products/classification', ProductClassificationView.as_view(), name='product_classification'),
+    path('basket/details/<pk>', BasketDetailView.as_view(), name='basket_details'),
+    path('basket/basket_add', BasketCreateView.as_view(), name='basket_add'),
+    path('basket/basket_delete', BasketDeleteView.as_view(), name='basket_delete'),
+    path('basket/basket_edit', BasketUpdateView.as_view(), name='basket_edit'),
+    path('purchse', BasketUpdateView.as_view(), name='purchase')
 ]

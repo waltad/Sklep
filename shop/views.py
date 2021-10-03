@@ -94,7 +94,7 @@ class BasketCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'formAddEditBasket.html'
     form_class = Basket
     success_url = reverse_lazy('basket_add')
-    permission_required = 'shop.basked_add'
+    permission_required = 'shop.basket_add'
 
 
 class BasketUpdateView(PermissionRequiredMixin, UpdateView):
@@ -124,3 +124,16 @@ class BasketDetailView(View):
             context={'basket': Product.objects.get(id=id)}
         )
 
+
+class PurchaseView(PermissionRequiredMixin, UpdateView):
+    template_name = 'fromAddEditBasket.html'
+    success_url = reverse_lazy('purchase')
+    model = Basket
+    permission_required = 'shop.purchase'
+
+
+class ProductClassificationView(PermissionRequiredMixin, UpdateView):
+    template_name = 'formAddEditProduct.html'
+    success_url = reverse_lazy('product_classification')
+    model = Basket
+    permission_required = 'shop.product_classification'
