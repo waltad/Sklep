@@ -38,26 +38,32 @@
             <label for="{{ form.description.id_for_label }}">Opis</label>
             {{ form.description }}
         </div>
-
+        <label>
         <input type="submit" value="Wyślij" class="btn btn-primary">
-
+        </label>
             <!-- Ilość -->
         <div class="form-group col-md-4">
             {{ form.amount.errors }}
             <label for="{{ form.amount.id_for_label }}">Ilość</label>
             {{ form.amount }}
         </div>
-        <input type="range" value="Wybierz ilość" class="btn btn-primary">
+        <label>
+            <input type="range" value="Wybierz ilość" class="btn btn-primary">
+        </label>
 
-         <!-- Cena -->
+        <!-- Cena -->
         <div class="form-group col-md-4">
             {{ form.price.errors }}
             <label for="{{ form.price.id_for_label }}">Cena</label>
             {{ form.price }}
         </div>
-        <input type="number" value="Cena" class="input-group-text">.00">
+        <label>
+            <input type="number" value="Cena" class="input-group-text">
+        </label>
+
 
     </form>
+
 
 
 
