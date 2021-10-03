@@ -51,10 +51,10 @@ class ProductInOrder(Model):
 
 class Profile(Model):
     user = OneToOneField(User, on_delete=CASCADE)
-    street = CharField()
-    home_number = CharField()
-    flat_number = CharField()
-    postcode = CharField()
-    locality = CharField()
-    country = CharField()
-    phone_number = CharField()
+    street = CharField(max_length=128)
+    home_number = CharField(max_length=128)
+    flat_number = CharField(max_length=128)
+    postcode = CharField(max_length=128)
+    locality = CharField(max_length=128)
+    country = CharField(max_length=128)
+    phone_number = CharField(max_length=128)
