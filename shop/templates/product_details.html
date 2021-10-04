@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Szczegóły: {{ product.category }}
+    Kategoria: {{ products.category }}
 {% endblock %}
 
 {%  block content %}
-    <h1>{{ shop.product }}</h1>
-    <div><strong>Kategoria: </strong> {{ product.category }}</div>
-    <div> <strong>Zdjęcie: </strong>{{ product.photo }} </div>
-    <div> <strong>Cena: </strong>{{ product.price }}</div>
-    <div> <strong>Ilość: </strong>{{ product.amount }} </div>
-    <div> <strong>Opis: </strong>{{ product.description }} </div>
+    <h1>{{ products.category }}</h1>
+    <div> <strong>Zdjęcie: </strong>{{ products.photo }} </div>
+    <div> <strong>Cena: </strong>{{ products.price }} zł</div>
+    <div> <strong>Ilość: </strong>{{ products.amount }} szt.</div>
+    <div> <strong>Opis: </strong>{{ products.description }} </div>
 {% endblock %}

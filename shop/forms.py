@@ -49,7 +49,7 @@ class SignUpForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email']
 
     street = CharField(
-        label='Podaj ulicę', widget=Textarea, min_length=3
+        label='Podaj ulicę', widget=Textarea, min_length=3, max_length=128
     )
     home_number = CharField(
         label='Podaj numer domu', widget=Textarea, min_length=1

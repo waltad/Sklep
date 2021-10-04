@@ -39,7 +39,6 @@
             {{ form.description }}
         </div>
 
-        <input type="submit" value="Wyślij" class="btn btn-primary">
 
             <!-- Ilość -->
         <div class="form-group col-md-4">
@@ -47,7 +46,7 @@
             <label for="{{ form.amount.id_for_label }}">Ilość</label>
             {{ form.amount }}
         </div>
-        <input type="range" value="Wybierz ilość" class="btn btn-primary">
+{#        <input type="range" value="Wybierz ilość" class="btn btn-primary">#}
 
          <!-- Cena -->
         <div class="form-group col-md-4">
@@ -55,8 +54,8 @@
             <label for="{{ form.price.id_for_label }}">Cena</label>
             {{ form.price }}
         </div>
-        <input type="number" value="Cena" class="input-group-text">.00">
-
+{#        <input type="number" value="Cena" class="input-group-text">#}
+        <input type="submit" value="Dodaj" class="btn btn-primary">
     </form>
 
 
