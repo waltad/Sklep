@@ -60,9 +60,9 @@ urlpatterns = [
     path('products/delete/<pk>', ProductDeleteView.as_view(), name='product_delete'),
     path('products/update/<pk>', ProductUpdateView.as_view(), name='product_edit'),
     path('products/classification/', ProductClassificationView.as_view(), name='product_classification'),
-    path('basket/details/,id>', BasketDetailView.as_view(), name='basket_details'),
+    path('basket/details/<id>', BasketDetailView.as_view(), name='basket_details'),
     path('basket/create/', BasketCreateView.as_view(), name='basket_add'),
-    path('basket/delete/', BasketDeleteView.as_view(), name='basket_delete'),
-    path('basket/update/', BasketUpdateView.as_view(), name='basket_edit'),
+    path('basket/delete/<pk>', BasketDeleteView.as_view(), name='basket_delete'),
+    path('basket/update/<pk>', BasketUpdateView.as_view(), name='basket_edit'),
     path('purchse/', BasketUpdateView.as_view(), name='purchase')
 ]
