@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Kategoria: {{ basket.products.category }}
+{% endblock %}
+
+{%  block content %}
+    <h1>{{ basket.products.category }}</h1>
+    <div> <strong>Cena: </strong>{{ basket.products.price }} zł</div>
+    <div> <strong>Ilość: </strong>{{ basket.amount }} szt.</div>
+{% endblock %}

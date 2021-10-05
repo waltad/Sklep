@@ -30,7 +30,7 @@
                     {% if user.is_authenticated %}
                         <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
                         <a class="nav-link" href="{% url 'password_change' %}">Zmień hasło</a>
-                        <a class="nav-link" href="{% url 'basket_add' %}">Dodaj do koszyka</a>
+{#                        <a class="nav-link" href="{% url 'basket_add' %}">Dodaj do koszyka</a>#}
                         <a class="nav-link" href="{% url 'basket_delete' %}">Usuń koszyk</a>
                         <a class="nav-link" href="{% url 'basket_edit' %}">Edytuj koszyk</a>
                         <a class="nav-link" href="{%  url 'purchase' %}">Złóż zamówienie</a>

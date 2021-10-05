@@ -86,3 +86,15 @@ class SignUpForm(UserCreationForm):
         if commit:
             profile.save()
         return result
+
+
+class BasketForm(ModelForm):
+    class Meta: #subklasa opisująca dane z których będzie tworzy form
+        model = Basket #model na podstawie tworzymy formularz
+        fields = '__all__' #wykorzystujemy wszystkie pola z modelu
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
