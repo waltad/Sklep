@@ -11,17 +11,17 @@
 
          <div class="form-group">
             <!-- Produkt -->
-            {{ form.product_name.errors }}
-            <label for="{{ form.product_name.id_for_label }}">Produktu</label>
-            {{ form.product_name }}
+            {{ form.basket.product_category.errors }}
+            <label for="{{ form.basket.product_category.id_for_label }}">Produktu</label>
+            {{ form.product_category }}
         </div>
 
         <div class="form-row">
             <!-- Ilość -->
             <div class="form-group col-md-4">
-                {{ form.amount.errors }}
-                <label for="{{ form.amount.id_for_label }}">Ilość</label>
-                {{ form.amount }}
+                {{ form.basket_amount.errors }}
+                <label for="{{ form.basket_amount.id_for_label }}">Ilość</label>
+                {{ form.basket_amount }}
 
             </div>
             <input type="range" value="Wybierz ilość" class="btn btn-primary">
@@ -29,7 +29,7 @@
             <div class="form-group col-md-4">
                 {{ form.client.errors }}
                 <label for="{{ form.client.id_for_label }}">Klient</label>
-                {{ form.client }}
+                {{ form.client.id }}
             </div>
         </div>
     </form>

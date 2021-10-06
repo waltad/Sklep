@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %} Usuwanie produktu z koszyka {% endblock %}
+
+{% block content %}
+    {% if user.is_staff %}
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            Are you sure want to delete this product "{{ object.product.category }}"?
+        </p>
+        <input type="submit" value="Yes" class="btn btn-danger">
+    </form>
+    {% endif %}
+
+{% endblock %}

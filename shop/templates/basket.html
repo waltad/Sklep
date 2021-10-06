@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Twój koszyk
+{% endblock %}
+
+{% block content %}
+    <h1>To są produkty w twoim koszyku</h1>
+    {% for basket in object_list %}
+        <li>
+            <a href="{% url 'basket_details' basket.id %}">{{ basket.product.category }}</a>
+                 - {{basket.product.price}} zł - {{basket.amount}} szt. - {{ basket.product.description }}
+            <a href="{% url 'basket_edit' basket.id %}">(Edytuj koszyk)</a>
+            <a href="{% url 'basket_delete' basket.id %}">(Usuń z koszyka)</a>
+        </li>
+
+    {% endfor %}
+{% endblock %}

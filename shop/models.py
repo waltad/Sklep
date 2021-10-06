@@ -12,10 +12,12 @@ class Product(Model):
     amount = IntegerField(default=0)
     price = DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return self.category
+
 
 class Client(Model):
-    name = CharField(max_length=128)
-    surname = CharField(max_length=128)
+    user = OneToOneField(User, on_delete=CASCADE)
     street = CharField(max_length=128)
     home_number = CharField(max_length=128)
     flat_number = CharField(max_length=128)
@@ -33,7 +35,7 @@ class Delivery(Model):
 
 class Basket(Model):
     product = ForeignKey(Product, on_delete=DO_NOTHING)
-    amount = IntegerField(default=0)
+    amount = IntegerField(default=0,)
     client = ForeignKey(Client, on_delete=DO_NOTHING)
 
 
@@ -47,14 +49,3 @@ class ProductInOrder(Model):
     order = ForeignKey(Order, on_delete=DO_NOTHING)
     product = ForeignKey(Product, on_delete=DO_NOTHING)
     amount = IntegerField(default=0)
-
-
-class Profile(Model):
-    user = OneToOneField(User, on_delete=CASCADE)
-    street = CharField(max_length=128)
-    home_number = CharField(max_length=128)
-    flat_number = CharField(max_length=128)
-    postcode = CharField(max_length=128)
-    locality = CharField(max_length=128)
-    country = CharField(max_length=128)
-    phone_number = CharField(max_length=128)

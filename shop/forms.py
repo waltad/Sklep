@@ -9,7 +9,7 @@ from django.forms import (
     ModelForm, CharField, ModelChoiceField, IntegerField, DateField, Textarea, DecimalField
 )
 
-from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder, Profile
+from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder
 
 # from viewer.validators import PastMonthField, capitalized_validator
 from django.core.exceptions import ValidationError
@@ -49,25 +49,25 @@ class SignUpForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email']
 
     street = CharField(
-        label='Podaj ulicę', widget=Textarea, min_length=3, max_length=128
+        label='Podaj ulicę', min_length=3, max_length=128
     )
     home_number = CharField(
-        label='Podaj numer domu', widget=Textarea, min_length=1
+        label='Podaj numer domu', min_length=1
     )
     flat_number = CharField(
-        label='Podaj numer mieszkania', widget=Textarea, min_length=1
+        label='Podaj numer mieszkania', min_length=1
     )
     postcode = CharField(
-        label='Podaj kod pocztowy', widget=Textarea, min_length=5
+        label='Podaj kod pocztowy', min_length=5
     )
     locality = CharField(
-        label='Podaj miejscowość zamieszkania', widget=Textarea, min_length=3
+        label='Podaj miejscowość zamieszkania', min_length=3
     )
     country = CharField(
-        label='Podaj kraj zamieszkania', widget=Textarea, min_length=3
+        label='Podaj kraj zamieszkania', min_length=3
     )
     phone_number = CharField(
-        label='Podaj numer telefonu', widget=Textarea, min_length=3
+        label='Podaj numer telefonu', min_length=3
     )
 
     @atomic
@@ -81,7 +81,7 @@ class SignUpForm(UserCreationForm):
         locality = self.cleaned_data['locality']
         country = self.cleaned_data['country']
         phone_number = self.cleaned_data['phone_number']
-        profile = Profile(street=street, home_number=home_number, flat_number=flat_number, postcode=postcode,
+        profile = Client(street=street, home_number=home_number, flat_number=flat_number, postcode=postcode,
                           locality=locality, country=country, phone_number=phone_number, user=result)
         if commit:
             profile.save()

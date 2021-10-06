@@ -137,11 +137,3 @@ class ProductClassificationView(PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy('product_classification')
     model = Basket
     permission_required = 'shop.product_classification'
-
-
-class BasketDetailView(View):
-    def get(self, request, id):
-        return render(
-            request, 'baket_details.html',
-            context={'basket': Product.objects.get(id=id)}
-        )
