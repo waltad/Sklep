@@ -14,7 +14,7 @@
                 <a href="{% url 'product_edit' product.id %}">(Edytuj)</a>
                 <a href="{% url 'product_delete' product.id %}">(Usuń)</a>
             {% endif %}
-                <a href="{% url 'order_create' product.id %}">(Dodaj do koszyka)</a>
+{#                <a href="{% url 'order_create' product.id %}">(Dodaj do koszyka)</a>#}
         </li>
 
     {% endfor %}

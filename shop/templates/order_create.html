@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Dodaj produkt
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="form-group">
+            <!-- Data zamówienia -->
+            {{ form.order_date_order.errors }}
+            <label for="{{ form.order_date_order.id_for_label }}">Data zamówienia</label>
+            {{ form.order_date_order }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <!-- Nazwa produktu -->
+                {{ form.name.errors }}
+                <label for="{{ form.name.id_for_label }}">Nazwa produktu</label>
+                {{ form.product_name }}
+            </div>
+            <!-- Ilość -->
+            <div class="form-group col-md-4">
+                {{ form.amount.errors }}
+                <label for="{{ form.amount.id_for_label }}">Kategoria</label>
+                {{ form.amount }}
+            </div>
+                       <!-- Cena -->
+            <div class="form-group col-md-4">
+                {{ form.price.errors }}
+                <label for="{{ form.price.id_for_label }}">Cena</label>
+                {{ form.price }}
+            </div>
+        </div>
+
+        <input type="submit" value="Zaakceptuj" class="btn btn-primary">
+    </form>
+
+
+
+{% endblock %}

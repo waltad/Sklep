@@ -48,7 +48,7 @@ class ProductForm(ModelForm):
 class OrderForm(ModelForm):
     class Meta:  # subklasa opisująca dane z których będzie tworzy form
         model = Order  # model na podstawie tworzymy formularz
-        fields = '__all__'  # wykorzystujemy wszystkie pola z modelu
+        fields = ['name']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

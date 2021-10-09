@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db.models import (Model,
                               CharField, DateField, DateTimeField, IntegerField, DecimalField, TextField,
-                              ForeignKey, DO_NOTHING, OneToOneField, CASCADE)
+                              ForeignKey, DO_NOTHING, OneToOneField, CASCADE, ManyToManyField)
 # Create your models here.
 
 
@@ -38,6 +38,8 @@ class Basket(Model):
     client = ForeignKey(Client, on_delete=DO_NOTHING)
 
 
+
+
 class Order(Model):
     delivery = ForeignKey(Delivery, on_delete=DO_NOTHING, null=True)
     name = CharField(max_length=300, null=True)
@@ -45,6 +47,7 @@ class Order(Model):
     price = DecimalField(max_digits=10, decimal_places=2, null=True)
     client = ForeignKey(Client, on_delete=DO_NOTHING, null=True)
     date_order = DateTimeField(auto_now_add=True)
+    products = ManyToManyField(Product)
 
 
 class ProductInOrder(Model):

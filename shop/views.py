@@ -89,30 +89,13 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('products')
 
 
-class OrderCreateView(PermissionRequiredMixin, CreateView):
+class OrderCreateView(CreateView):
     template_name = 'order_create.html'
     form_class = OrderForm
     success_url = reverse_lazy('orders')
-    permission_required = 'shop.order_creates'
 
-    def add(self, product, amount=1, update_amount=False):
-        # Dodanie produktu do koszyka lub zmiana jego ilości.
-        product_id = str(product.id)
-        if product_id not in self.basket:
-            self.basket[product_id] = {'amount': 0, 'price': str(product.price)}
-        if update_amount:
-            self.basket[product_id]['amount'] = amount
-        else:
-            self.basket[product_id]['amount'] += amount
-        self.save()
 
-    def remove(self, product):
-        # Usunięcie produktu z koszyka na zakupy.
 
-        product_id = str(product.id)
-        if product_id in self.basket:
-            del self.basket[product_id]
-            self.save()
 
 
 # @require_POST
