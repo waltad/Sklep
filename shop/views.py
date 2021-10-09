@@ -16,7 +16,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from shop.forms import ProductForm, SignUpForm, BasketAddProductForm, OrderForm
-from shop.models import Product
+from shop.models import Product, Order
 # from shop.basket import Basket
 
 
@@ -92,7 +92,23 @@ class SignUpView(CreateView):
 class OrderCreateView(CreateView):
     template_name = 'order_create.html'
     form_class = OrderForm
-    success_url = reverse_lazy('orders')
+    success_url = reverse_lazy('products')
+
+
+# class OrderView(View):
+#     def get(self, request, order_id):
+#         return render(
+#             request, 'order_details.html',
+#             context={'order': Product.objects.get(id=order_id)}
+#         )
+
+class AddOrderView(View):
+    @staticmethod
+    def order_add(request, product_id, zamowenie_id):
+        order = Order.objects.get(name=zamowenie_id)
+        Order.products.add(order_id=order.id, product_id=product_id)
+        Order.products.save()
+        # Product.objects.filter(product_id=order_id)
 
 
 

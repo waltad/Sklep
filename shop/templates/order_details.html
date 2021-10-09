@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}
+    : {{ products.category }}
+{% endblock %}
+
+{%  block content %}
+    <h1>{{ products.category }}</h1>
+    <div> <strong>Zdjęcie: </strong>{{ products.photo }} </div>
+    <div> <strong>Cena: </strong>{{ products.price }} zł</div>
+    <div> <strong>Ilość: </strong>{{ products.amount }} szt.</div>
+    <div> <strong>Opis: </strong>{{ products.description }} </div>
+{% endblock %}
