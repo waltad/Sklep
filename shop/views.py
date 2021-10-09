@@ -2,18 +2,22 @@ from logging import getLogger
 
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.views import View
+from django.views.decorators.http import require_POST
+
+from shop import basket
 
 LOGGER = getLogger()
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from shop.forms import ProductForm, SignUpForm
-from shop.models import Product, Basket
+from shop.forms import ProductForm, SignUpForm, BasketAddProductForm, OrderForm
+from shop.models import Product
+# from shop.basket import Basket
 
 
 class ProductView(ListView):
@@ -85,63 +89,108 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('products')
 
 
-class BasketView(ListView):
-    template_name = 'formAddEditBasket.html'
-    model = Basket
+class OrderCreateView(PermissionRequiredMixin, CreateView):
+    template_name = 'order_create.html'
+    form_class = OrderForm
+    success_url = reverse_lazy('orders')
+    permission_required = 'shop.order_creates'
+
+    def add(self, product, amount=1, update_amount=False):
+        # Dodanie produktu do koszyka lub zmiana jego ilości.
+        product_id = str(product.id)
+        if product_id not in self.basket:
+            self.basket[product_id] = {'amount': 0, 'price': str(product.price)}
+        if update_amount:
+            self.basket[product_id]['amount'] = amount
+        else:
+            self.basket[product_id]['amount'] += amount
+        self.save()
+
+    def remove(self, product):
+        # Usunięcie produktu z koszyka na zakupy.
+
+        product_id = str(product.id)
+        if product_id in self.basket:
+            del self.basket[product_id]
+            self.save()
 
 
-class BasketCreateView(PermissionRequiredMixin, CreateView):
-    template_name = 'formAddEditBasket.html'
-    form_class = Basket
-    success_url = reverse_lazy('basket_add')
-    permission_required = 'shop.basket_add'
+# @require_POST
+# def basket_add(request, product_id):
+#     basket = Basket(request)
+#     product = get_object_or_404(Product, id=product_id)
+#     form = BasketAddProductForm(request.POST)
+#     if form.is_valid():
+#         cd = form.cleaned_data
+#         basket.add(product=product, amount=cd['amount'], update_amount=cd['update'])
+#     return redirect('basket:basket_detail')
+#
+#
+# @require_POST
+# def basket_remove(request, product_id):
+#     basket = Basket(request)
+#     product = get_object_or_404(Product, id=product_id)
+#     basket.remove(product)
+#     return redirect('basket:basket_detail')
+#
+#
+# def basket_detail(request):
+#     basket = Basket(request)
+#     return render(request, 'basket_details.html', {'basket': basket})
 
 
-class BasketUpdateView(PermissionRequiredMixin, UpdateView):
-    template_name = 'formAddEditBasket.html'
-    form_class = Basket
-    success_url = reverse_lazy('basket_edit')
-    model = Basket
-    permission_required = 'shop.basket_edit'
-    LOGGER.warning('User provided invalid data')
-
-    def form_invalid(self, form):
-        LOGGER.warning('User provided invalid data')
-        return super().form_invalid(form)
-
-
-class BasketDeleteView(PermissionRequiredMixin, DeleteView):
-    template_name = 'basket_delete.html'
-    success_url = reverse_lazy('basket_delete')
-    model = Basket
-    permission_required = 'shop.basket_delete'
-
-
-class BasketDetailView(View):
-    def get(self, request, id):
-        return render(
-            request, 'basket_details.html',
-            context={'basket': Product.objects.get(id=id)}
-        )
-
-
-class PurchaseView(PermissionRequiredMixin, UpdateView):
-    template_name = 'fromAddEditBasket.html'
-    success_url = reverse_lazy('purchase')
-    model = Basket
-    permission_required = 'shop.purchase'
-
-
-class ProductClassificationView(PermissionRequiredMixin, UpdateView):
-    template_name = 'formAddEditProduct.html'
-    success_url = reverse_lazy('product_classification')
-    model = Basket
-    permission_required = 'shop.product_classification'
-
-
-class BasketDetailView(View):
-    def get(self, request, id):
-        return render(
-            request, 'baket_details.html',
-            context={'basket': Product.objects.get(id=id)}
-        )
+# class BasketCreateView(PermissionRequiredMixin, CreateView):
+#     template_name = 'formAddEditBasket.html'
+#     form_class = Basket
+#     success_url = reverse_lazy('basket_add')
+#     permission_required = 'shop.basket_add'
+#
+#
+# class BasketUpdateView(PermissionRequiredMixin, UpdateView):
+#     template_name = 'formAddEditBasket.html'
+#     form_class = Basket
+#     success_url = reverse_lazy('basket_edit')
+#     model = Basket
+#     permission_required = 'shop.basket_edit'
+#     LOGGER.warning('User provided invalid data')
+#
+#     def form_invalid(self, form):
+#         LOGGER.warning('User provided invalid data')
+#         return super().form_invalid(form)
+#
+#
+# class BasketDeleteView(PermissionRequiredMixin, DeleteView):
+#     template_name = 'basket_delete.html'
+#     success_url = reverse_lazy('basket_delete')
+#     model = Basket
+#     permission_required = 'shop.basket_delete'
+#
+#
+# class BasketDetailView(View):
+#     def get(self, request, id):
+#         return render(
+#             request, 'basket_details.html',
+#             context={'basket': Product.objects.get(id=id)}
+#         )
+#
+#
+# class PurchaseView(PermissionRequiredMixin, UpdateView):
+#     template_name = 'fromAddEditBasket.html'
+#     success_url = reverse_lazy('purchase')
+#     model = Basket
+#     permission_required = 'shop.purchase'
+#
+#
+# class ProductClassificationView(PermissionRequiredMixin, UpdateView):
+#     template_name = 'formAddEditProduct.html'
+#     success_url = reverse_lazy('product_classification')
+#     model = Basket
+#     permission_required = 'shop.product_classification'
+#
+#
+# class BasketDetailView(View):
+#     def get(self, request, id):
+#         return render(
+#             request, 'baket_details.html',
+#             context={'basket': Product.objects.get(id=id)}
+#         )

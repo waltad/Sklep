@@ -24,8 +24,7 @@ from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder
 from django.contrib.admin.sites import AlreadyRegistered
 
 from shop.views import ProductDetailView, ProductUpdateView, ProductCreateView, ProductDeleteView, SignUpView, \
-    SubmittableLoginView, SubmittablePasswordChangeForm, ProductView, BasketDetailView, BasketCreateView, \
-    BasketDeleteView, BasketUpdateView, ProductClassificationView
+    SubmittableLoginView, SubmittablePasswordChangeForm, ProductView, OrderCreateView
 
 try:
     admin.site.register(Product)
@@ -36,7 +35,6 @@ try:
     admin.site.register(ProductInOrder)
 except AlreadyRegistered:
     pass
-
 
 
 urlpatterns = [
@@ -59,10 +57,10 @@ urlpatterns = [
     path('products/create/', ProductCreateView.as_view(), name='product_add'),
     path('products/delete/<pk>', ProductDeleteView.as_view(), name='product_delete'),
     path('products/update/<pk>', ProductUpdateView.as_view(), name='product_edit'),
-    path('products/classification/', ProductClassificationView.as_view(), name='product_classification'),
-    path('basket/details/<id>', BasketDetailView.as_view(), name='basket_details'),
-    path('basket/create/', BasketCreateView.as_view(), name='basket_add'),
-    path('basket/delete/<pk>', BasketDeleteView.as_view(), name='basket_delete'),
-    path('basket/update/<pk>', BasketUpdateView.as_view(), name='basket_edit'),
-    path('purchse/', BasketUpdateView.as_view(), name='purchase')
+    # path('products/classification/', ProductClassificationView.as_view(), name='product_classification'),
+    # path('basket/details/', views.basket_detail, name='basket_details'),
+    path('order/create/<int:product_id>', OrderCreateView.as_view, name='order_create'),
+    # path('basket/delete/<int:product_id>', views.basket_remove, name='basket_delete'),
+    # path('basket/update/', BasketUpdateView.as_view(), name='basket_edit'),
+    # path('purchse/', BasketUpdateView.as_view(), name='purchase'),
 ]

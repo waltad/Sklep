@@ -6,7 +6,8 @@ from django.db.transaction import atomic
 
 LOGGER = getLogger()
 from django.forms import (
-    ModelForm, CharField, ModelChoiceField, IntegerField, DateField, Textarea, DecimalField
+    ModelForm, CharField, ModelChoiceField, IntegerField, DateField, Textarea, DecimalField, Form, TypedChoiceField,
+    BooleanField, HiddenInput
 )
 
 from shop.models import Product, Client, Delivery, Basket, Order, ProductInOrder, Profile
@@ -16,18 +17,18 @@ from django.core.exceptions import ValidationError
 
 import re
 
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
+
+
+class BasketAddProductForm(Form):
+    quantity = TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
+    override = BooleanField(required=False, initial=False, widget=HiddenInput)
+
 
 class ProductForm(ModelForm):
-    class Meta: #subklasa opisująca dane z których będzie tworzy form
-        model = Product #model na podstawie tworzymy formularz
-        fields = '__all__' #wykorzystujemy wszystkie pola z modelu
-
-    #pola z własnymi walidatorami dodajemy oddzielnie
-    # category = CharField(max_length=128)
-    # photo = CharField(max_length=128)
-    # description = TextField(null=True)
-    # amount = IntegerField(default=0)
-    # price = DecimalField(max_digits=10, decimal_places=2)
+    class Meta:  # subklasa opisująca dane z których będzie tworzy form
+        model = Product  # model na podstawie tworzymy formularz
+        fields = '__all__'  # wykorzystujemy wszystkie pola z modelu
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -35,13 +36,25 @@ class ProductForm(ModelForm):
             visible.field.widget.attrs['class'] = 'form-control'
 
     def clean_description(self):
-        #pobranie wartości pola description
+        # pobranie wartości pola description
         initial = self.cleaned_data['description']
-        #podział tekstu na części "od kropki do kropki" na zdania
+        # podział tekstu na części "od kropki do kropki" na zdania
         sentences = re.sub(r'\s*\.\s*', '.', initial).split('.')
-        #zamina na wielką literę pierwszj litery każdego ze zdań,
-        #dodanie kropki, powtórzenie operacji dla kolejnego zdania
+        # zamina na wielką literę pierwszj litery każdego ze zdań,
+        # dodanie kropki, powtórzenie operacji dla kolejnego zdania
         return '.'.join(sentence.capitalize() for sentence in sentences)
+
+
+class OrderForm(ModelForm):
+    class Meta:  # subklasa opisująca dane z których będzie tworzy form
+        model = Order  # model na podstawie tworzymy formularz
+        fields = '__all__'  # wykorzystujemy wszystkie pola z modelu
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
 
 
 class SignUpForm(UserCreationForm):
@@ -49,25 +62,25 @@ class SignUpForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email']
 
     street = CharField(
-        label='Podaj ulicę', widget=Textarea, min_length=3, max_length=128
+        label='Podaj ulicę', min_length=3, max_length=128
     )
     home_number = CharField(
-        label='Podaj numer domu', widget=Textarea, min_length=1
+        label='Podaj numer domu', min_length=1
     )
     flat_number = CharField(
-        label='Podaj numer mieszkania', widget=Textarea, min_length=1
+        label='Podaj numer mieszkania', min_length=1
     )
     postcode = CharField(
-        label='Podaj kod pocztowy', widget=Textarea, min_length=5
+        label='Podaj kod pocztowy', min_length=5
     )
     locality = CharField(
-        label='Podaj miejscowość zamieszkania', widget=Textarea, min_length=3
+        label='Podaj miejscowość zamieszkania', min_length=3
     )
     country = CharField(
-        label='Podaj kraj zamieszkania', widget=Textarea, min_length=3
+        label='Podaj kraj zamieszkania', min_length=3
     )
     phone_number = CharField(
-        label='Podaj numer telefonu', widget=Textarea, min_length=3
+        label='Podaj numer telefonu', min_length=3
     )
 
     @atomic
@@ -88,13 +101,12 @@ class SignUpForm(UserCreationForm):
         return result
 
 
-class BasketForm(ModelForm):
-    class Meta: #subklasa opisująca dane z których będzie tworzy form
-        model = Basket #model na podstawie tworzymy formularz
-        fields = '__all__' #wykorzystujemy wszystkie pola z modelu
-
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'form-control'
+# class BasketForm(ModelForm):
+#     class Meta:  # subklasa opisująca dane z których będzie tworzy form
+#         model = Basket  # model na podstawie tworzymy formularz
+#         fields = '__all__'  # wykorzystujemy wszystkie pola z modelu
+#
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         for visible in self.visible_fields():
+#             visible.field.widget.attrs['class'] = 'form-control'

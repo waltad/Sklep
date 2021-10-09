@@ -7,7 +7,8 @@ from django.db.models import (Model,
 
 class Product(Model):
     category = CharField(max_length=128)
-    photo = CharField(max_length=128)
+    name = CharField(max_length=300, null=True)
+    photo = CharField(max_length=128, null=True)
     description = TextField(null=True)
     amount = IntegerField(default=0)
     price = DecimalField(max_digits=10, decimal_places=2)
@@ -38,8 +39,11 @@ class Basket(Model):
 
 
 class Order(Model):
-    delivery = ForeignKey(Delivery, on_delete=DO_NOTHING)
-    client = ForeignKey(Client, on_delete=DO_NOTHING)
+    delivery = ForeignKey(Delivery, on_delete=DO_NOTHING, null=True)
+    name = CharField(max_length=300, null=True)
+    amount = IntegerField(default=0, null=True)
+    price = DecimalField(max_digits=10, decimal_places=2, null=True)
+    client = ForeignKey(Client, on_delete=DO_NOTHING, null=True)
     date_order = DateTimeField(auto_now_add=True)
 
 
