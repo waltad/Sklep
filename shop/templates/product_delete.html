@@ -7,7 +7,7 @@
     <form method="post">
         {% csrf_token %}
         <p>
-            Are you sure want to delete this product "{{ object.category }}"?
+            Are you sure want to delete this product "{{ object.name }}"?
         </p>
         <input type="submit" value="Yes" class="btn btn-danger">
     </form>

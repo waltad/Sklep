@@ -38,8 +38,6 @@ class Basket(Model):
     client = ForeignKey(Client, on_delete=DO_NOTHING)
 
 
-
-
 class Order(Model):
     delivery = ForeignKey(Delivery, on_delete=DO_NOTHING, null=True)
     name = CharField(max_length=300, null=True)

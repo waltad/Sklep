@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>Witaj w naszym sklepie ! Zarządzaj produktami w swoim sklepie</h1>
-{#    <form action="{% url 'order_add' product.id %}">#}
+    <form>
     <input name="zamowienie_id">
     {% for product in object_list %}
         <li>
@@ -16,7 +16,7 @@
                 <a href="{% url 'product_edit' product.id %}">(Edytuj)</a>
                 <a href="{% url 'product_delete' product.id %}">(Usuń)</a>
             {% endif %}
-                <button type="submit">(Dodaj do zamówienia)</button>
+                <button formaction="{% url 'order_add' product.id %}" type="submit">(Dodaj do zamówienia)</button>
         </li>
 
     {% endfor %}

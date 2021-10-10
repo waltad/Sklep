@@ -91,24 +91,30 @@ class SignUpView(CreateView):
 
 class OrderCreateView(CreateView):
     template_name = 'order_create.html'
+    model = Order
     form_class = OrderForm
     success_url = reverse_lazy('products')
 
 
-# class OrderView(View):
-#     def get(self, request, order_id):
-#         return render(
-#             request, 'order_details.html',
-#             context={'order': Product.objects.get(id=order_id)}
-#         )
+class OrderView(View):
+    def get(self, request, order_id):
+        return render(
+            request, 'order_details.html',
+            context={'order': Product.objects.get(id=order_id)}
+        )
 
 class AddOrderView(View):
-    @staticmethod
-    def order_add(request, product_id, zamowenie_id):
-        order = Order.objects.get(name=zamowenie_id)
-        Order.products.add(order_id=order.id, product_id=product_id)
-        Order.products.save()
-        # Product.objects.filter(product_id=order_id)
+    template_name = 'order_add.html'
+    model = Order
+    form_class = OrderForm
+    success_url = reverse_lazy('products')
+
+    def get(self, request, product_id):
+        product = Product.objects.filter(id=product_id).first()
+        order = Order.objects.get(id=request.GET.get("zamowienie_id"))
+        order.products.add(product)
+        order.save()
+
 
 
 
