@@ -97,17 +97,17 @@ class OrderCreateView(CreateView):
 
 
 class OrderView(View):
-    def get(self, request, order_id):
-        return render(
+    def get(self, request):
+       return render(
             request, 'order_details.html',
-            context={'order': Order.objects.get(id=order_id)}
+            context={'orders': Order.objects.all()}
         )
 
 
 class AddOrderView(View):
     template_name = 'order_add.html'
-    model = Order
-    form_class = OrderForm
+    # model = Order
+    # form_class = OrderForm
     success_url = reverse_lazy('products')
 
     def get(self, request, product_id):

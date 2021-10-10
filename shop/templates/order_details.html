@@ -6,15 +6,15 @@
 
 {% block content %}
     <h1>Twoje zamówienie:</h1>
-    <form>
-    <input name="zamowienie_id">
-        {% for order in object_list %}
-            <li>
-                <a href="{% url 'order_details' product.id %}">{{ product.category }}</a>
-                     {{ products.name }} - {{products.price}} zł - {{products.amount}} szt.
 
+        {% for order in orders %}
+            <li>
+                {{ order.name }}
+{#                {% for product in order.products %}#}
+{#                    {{ product.name }}#}
+{#                {% endfor %}    #}
             </li>
 
         {% endfor %}
-    </form>
+
 {% endblock %}
