@@ -8,17 +8,17 @@
     <h1>Witaj w naszym sklepie ! Zarządzaj produktami w swoim sklepie</h1>
     <form>
     <input name="zamowienie_id">
-    {% for product in object_list %}
-        <li>
-            <a href="{% url 'product_details' product.id %}">{{ product.category }}</a>
-                 {{ product.name }} - {{product.price}} zł - {{product.amount}} szt. - {{ product.description }}
-            {% if user.is_staff %}
-                <a href="{% url 'product_edit' product.id %}">(Edytuj)</a>
-                <a href="{% url 'product_delete' product.id %}">(Usuń)</a>
-            {% endif %}
-                <button formaction="{% url 'order_add' product.id %}" type="submit">(Dodaj do zamówienia)</button>
-        </li>
+        {% for product in object_list %}
+            <li>
+                <a href="{% url 'product_details' product.id %}">{{ product.category }}</a>
+                     {{ product.name }} - {{product.price}} zł - {{product.amount}} szt. - {{ product.description }}
+                {% if user.is_staff %}
+                    <a href="{% url 'product_edit' product.id %}">(Edytuj)</a>
+                    <a href="{% url 'product_delete' product.id %}">(Usuń)</a>
+                {% endif %}
+                    <button formaction="{% url 'order_add' product.id %}" type="submit">(Dodaj do zamówienia)</button>
+            </li>
 
-    {% endfor %}
+        {% endfor %}
     </form>
 {% endblock %}

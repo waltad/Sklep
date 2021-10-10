@@ -100,8 +100,9 @@ class OrderView(View):
     def get(self, request, order_id):
         return render(
             request, 'order_details.html',
-            context={'order': Product.objects.get(id=order_id)}
+            context={'order': Order.objects.get(id=order_id)}
         )
+
 
 class AddOrderView(View):
     template_name = 'order_add.html'
